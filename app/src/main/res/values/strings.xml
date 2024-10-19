@@ -3,4 +3,11 @@
     <string name="save_button">Save</string>
     <string name="Enter_text">Enter text</string>
     <string name="Go_next_button">Go to 2nd</string>
+    <string-array name="theme_options">
+        <item>Default</item>
+        <item>Dark theme</item>
+        <item>Light theme</item>
+    </string-array>
+    <string name="read_storage">Read storage</string>
+    <string name="Storage_text">Click to display stored message!</string>
 </resources>
