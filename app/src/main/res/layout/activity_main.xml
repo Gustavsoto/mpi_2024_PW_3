@@ -7,39 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="91dp"
+    <Spinner
+        android:id="@+id/themeSpinner"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:text="@string/save_button"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="304dp"
-        tools:layout_editor_absoluteY="274dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:entries="@array/theme_options"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputText"
+        tools:ignore="NotSibling" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Go_next_button"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="411dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_marginTop="32dp"
+        android:text="@string/saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/themeSpinner" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="370dp"
-        android:layout_height="48dp"
-        android:entries="@array/theme_options"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="334dp" />
+    <Button
+        android:id="@+id/goToSecondButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/GoNextButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/saveButton" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="280dp"
+        android:id="@+id/inputText"
+        android:layout_width="362dp"
         android:layout_height="48dp"
-        android:hint="@string/Enter_text"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="274dp" />
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="32dp"
+        android:hint="@string/inputHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
