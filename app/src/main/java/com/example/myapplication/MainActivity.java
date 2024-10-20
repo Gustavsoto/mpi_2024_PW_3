@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,14 +23,53 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        int selectedTheme = sharedPreferences.getInt("selected_theme", R.style.Base_Theme_MyApplication); // Default theme
+        setTheme(selectedTheme);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         Button saveButton = findViewById(R.id.saveButton);
         Button goToSecondButton = findViewById(R.id.goToSecondButton);
-        View themeSpinner = findViewById(R.id.themeSpinner);
+
+        Spinner themeSpinner = findViewById(R.id.themeSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.theme_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        themeSpinner.setAdapter(adapter);
+        int savedPosition = sharedPreferences.getInt("theme_spinner_position", 0);
+        themeSpinner.setSelection(savedPosition);
+
+        themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int themeToApply;
+                switch (position) {
+                    case 0: // Default or Light Theme
+                    case 2:
+                        themeToApply = R.style.Base_Theme_MyApplication;
+                        break;
+                    case 1: // Dark Theme
+                        themeToApply = R.style.Base_Theme_MyApplication_Dark;
+                        break;
+                    default:
+                        themeToApply = R.style.Base_Theme_MyApplication;
+                }
+
+                // Store selected theme in SharedPreferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("selected_theme", themeToApply);
+                editor.putInt("theme_spinner_position", position);  // Save spinner position
+                editor.apply();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+
         TextInputEditText inputText = findViewById(R.id.inputText);
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String savedString = sharedPreferences.getString("entered_text", "No string has been stored"); // Default to empty string
         inputText.setText(savedString);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String input = String.valueOf(inputText.getText());
                 saveToSharedPreferences(input);
+                recreate();
             }
         });
         goToSecondButton.setOnClickListener(new View.OnClickListener() {
